@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">WorkbookSdk</string>
+
+    <string-array name="work_book_key_entries">
+        <item>title</item>
+        <item>type</item>
+        <item>area</item>
+        <item>address</item>
+        <item>from</item>
+        <item>count</item>
+        <item>ageRange</item>
+        <item>suZhi</item>
+        <item>score</item>
+        <item>serviceItems</item>
+        <item>price</item>
+        <item>openTime</item>
+        <item>surroundings</item>
+        <item>safety</item>
+        <item>contactInfo</item>
+        <item>evaluate</item>
+        <item>description</item>
+    </string-array>
+</resources>
