@@ -21,7 +21,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+//    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+//    implementation 'com.hynnet:jxl:2.6.12.1'
+    implementation 'jexcelapi:jxl:2.6'//这个没有log4j包
 }
 
 //---------maven-release-aar.gradle---------

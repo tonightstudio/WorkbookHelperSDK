@@ -8,9 +8,9 @@
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
-      <groupId>net.sourceforge.jexcelapi</groupId>
+      <groupId>jexcelapi</groupId>
       <artifactId>jxl</artifactId>
-      <version>2.6.12</version>
+      <version>2.6</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
