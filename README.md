@@ -10,5 +10,5 @@
         }
     }
     dependencies {
-        compile 'com.github.tonightstudio:workbookhelper:1.0'
+        implementation 'com.github.tonightstudio:workbookhelper:1.0'
     }
