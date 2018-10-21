@@ -4,10 +4,7 @@
 使用方法：
 
     repositories {
-        maven {
-            //指定Github上SDK项目的路径
-            url "https://github.com/tonightstudio/WorkbookHelperSDK/raw/master"
-        }
+        maven { url "https://github.com/tonightstudio/WorkbookHelperSDK/raw/master" }
     }
     dependencies {
         implementation 'com.github.tonightstudio:workbookhelper:1.0'
