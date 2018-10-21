@@ -33,6 +33,11 @@ public class WorkbookHelper implements Runnable {
         this.fileName = fileName;
     }
 
+    /**
+     * 手动设置key集合
+     *
+     * @param keyArray
+     */
     public void setKeyArray(String[] keyArray) {
         this.keyArray = keyArray;
     }
@@ -46,6 +51,11 @@ public class WorkbookHelper implements Runnable {
         this.sheetIndex = sheetIndex;
     }
 
+    /**
+     * 指定key所在的行数
+     *
+     * @param keyRowIndex
+     */
     public void setKeyRowIndex(int keyRowIndex) {
         this.keyRowIndex = keyRowIndex;
     }
@@ -67,6 +77,9 @@ public class WorkbookHelper implements Runnable {
                 keyList = new ArrayList<>();
             } else {
                 keyList = Arrays.asList(keyArray);
+                if (columns != keyArray.length) {
+                    throw new IllegalArgumentException("key的个数应该为：" + columns);
+                }
             }
             if (keyList.size() == 0) {
                 //如果没有设置key的集合，就用表的指定行的数据做为key
@@ -86,7 +99,10 @@ public class WorkbookHelper implements Runnable {
                     //sheet.getCell(列，行);
                     Cell cell = sheet.getCell(n, m);
                     String contents = cell.getContents();
-                    jsonObject.put(keyList.get(n), contents);
+                    if (n < keyList.size()) {
+                        String key = keyList.get(n);
+                        jsonObject.put(key, contents);
+                    }
                 }
                 jsonArray.put(jsonObject);
             }
