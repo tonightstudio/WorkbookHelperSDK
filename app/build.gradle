@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
     }
     buildTypes {
         release {
@@ -19,15 +19,21 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    //谷歌官方room数据库
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
-    //谷歌AAC安卓架构组件,For Lifecycles, LiveData, and ViewModel,多加这三个依赖仅增加了9kb的apk占用
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+//    implementation 'androidx.core:core:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0-alpha01'
+//    annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha01'
+
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation project(':workbookhelper')
 //    implementation 'com.github.tonightstudio:workbookhelper:1.0'
+
+    //android程序崩溃框架—CustomActivityOnCrash
+    //https://blog.csdn.net/huangxiaoguo1/article/details/79053197
+    implementation ('cat.ereza:customactivityoncrash:2.2.0'){
+        exclude group: 'com.android.support'
+    }
 }

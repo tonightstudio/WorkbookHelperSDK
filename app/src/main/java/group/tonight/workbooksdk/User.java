@@ -1,9 +1,9 @@
 package group.tonight.workbooksdk;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 /**
  * Created by liyiwei on 2018/2/20.
