@@ -15,6 +15,7 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import group.tonight.workbookhelper.BaseResponseBean;
+import group.tonight.workbookhelper.MultiFileParser;
 import group.tonight.workbookhelper.WorkbookHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,10 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void hahaha(View view) {
 //        parseShenZhen();
-        parseUser();
+//        parseUser();
+        parseMultiFile();
     }
-
-    // TODO: 2018/10/25 0025 添加文件批量处理逻辑
 
     /**
      * 处理7种情况：
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         String[] fileName = {
                 "070定.xls"
                 , "081定.xls"
-                , "283定xls.xls"
+                , "283定.xls"
                 , "478定.xls"
                 , "496定.xls"
                 , "497定.xls"
@@ -103,6 +103,62 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void parseMultiFile() {
+        String[] fileName = {
+                "070定.xls"
+                , "081定.xls"
+                , "283定.xls"
+                , "478定.xls"
+                , "496定.xls"
+                , "497定.xls"
+                , "503定.xls"
+                , "513定.xls"
+                , "601定.xls"
+                , "703定.xls"
+                , "735定.xls"
+                , "750定.xls"
+        };
+
+        MultiFileParser multiFileParser = new MultiFileParser(this) {
+            @Override
+            public Map<String, String> setKeyMap() {
+                Map<String, String> map = new HashMap<>();
+                map.put("用户编号", "userId");
+                map.put("用户名称", "userName");
+                map.put("联系方式", "userPhone");
+                map.put("用户地址", "userAddress");
+                map.put("电能表号", "powerMeterId");
+                map.put("抄表序号", "meterReadingId");
+                map.put("抄表段编号", "powerLineId");
+
+                map.put("用电地址", "userAddress");
+                map.put("电能表编号", "powerMeterId");
+                return map;
+            }
+        };
+        multiFileParser.setFileName(fileName);
+        multiFileParser.observe(this, new Observer<BaseResponseBean<String>>() {
+            @Override
+            public void onChanged(BaseResponseBean<String> response) {
+                if (response == null) {
+                    return;
+                }
+                if (response.getMsg() != null) {
+                    Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String data = response.getData();
+                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+
+                Type type = new TypeToken<List<User>>() {
+                }.getType();
+                List<User> dataList = new Gson().fromJson(data, type);
+                System.out.println();
+            }
+        });
+        new Thread(multiFileParser).start();
     }
 
     private void parseShenZhen() {
