@@ -17,66 +17,14 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 /**
- * 测试修改sdk不改版本号
- * String[] fileName = {
- *                 "070定.xls"
- *                 , "081定.xls"
- *                 , "283定.xls"
- *                 , "478定.xls"
- *                 , "496定.xls"
- *                 , "497定.xls"
- *                 , "503定.xls"
- *                 , "513定.xls"
- *                 , "601定.xls"
- *                 , "703定.xls"
- *                 , "735定.xls"
- *                 , "750定.xls"
- *         };
- *
- *         MultiFileParser multiFileParser = new MultiFileParser(this) {
- *             @Override
- *             public Map<String, String> setKeyMap() {
- *                 Map<String, String> map = new HashMap<>();
- *                 map.put("用户编号", "userId");
- *                 map.put("用户名称", "userName");
- *                 map.put("联系方式", "userPhone");
- *                 map.put("用户地址", "userAddress");
- *                 map.put("电能表号", "powerMeterId");
- *                 map.put("抄表序号", "meterReadingId");
- *                 map.put("抄表段编号", "powerLineId");
- *
- *                 map.put("用电地址", "userAddress");
- *                 map.put("电能表编号", "powerMeterId");
- *                 return map;
- *             }
- *         };
- *         multiFileParser.setFileName(fileName);
- *         multiFileParser.observe(this, new Observer<BaseResponseBean<String>>() {
- *             @Override
- *             public void onChanged(BaseResponseBean<String> response) {
- *                 if (response == null) {
- *                     return;
- *                 }
- *                 if (response.getMsg() != null) {
- *                     Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
- *                     return;
- *                 }
- *                 String data = response.getData();
- *                 Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
- *
- *                 Type type = new TypeToken<List<User>>() {
- *                 }.getType();
- *                 List<User> dataList = new Gson().fromJson(data, type);
- *                 System.out.println();
- *             }
- *         });
- *         new Thread(multiFileParser).start();
- *
+ * 多文件解析
+ * <p>
  * Description：李艺为(15897461476 @ 139.com) created at 2018/10/27 0027 15:39
  */
 public abstract class MultiFileParser extends LiveData<BaseResponseBean<String>> implements Runnable {
     private String[] mFileName;
     private Context mContext;
+    private OnParseResultListener onParseResultListener;
 
     public abstract Map<String, String> setKeyMap();
 
@@ -86,6 +34,10 @@ public abstract class MultiFileParser extends LiveData<BaseResponseBean<String>>
 
     public void setFileName(String... fileName) {
         mFileName = fileName;
+    }
+
+    public void setOnParseResultListener(OnParseResultListener listener) {
+        this.onParseResultListener = listener;
     }
 
     @Override
@@ -135,7 +87,20 @@ public abstract class MultiFileParser extends LiveData<BaseResponseBean<String>>
                 response.setMsg(e.getMessage());
             }
         }
-        response.setData(jsonArray.toString());
+        String json = jsonArray.toString();
+        response.setData(json);
+        if (onParseResultListener != null) {
+            onParseResultListener.onParseResult(response);
+        }
         postValue(response);
+    }
+
+    public interface OnParseResultListener {
+        /**
+         * 工作线程
+         *
+         * @param response
+         */
+        void onParseResult(BaseResponseBean<String> response);
     }
 }

@@ -139,6 +139,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         multiFileParser.setFileName(fileName);
+        //工作线程
+        multiFileParser.setOnParseResultListener(new MultiFileParser.OnParseResultListener() {
+            @Override
+            public void onParseResult(String json) {
+
+            }
+        });
+        //主线程
         multiFileParser.observe(this, new Observer<BaseResponseBean<String>>() {
             @Override
             public void onChanged(BaseResponseBean<String> response) {
