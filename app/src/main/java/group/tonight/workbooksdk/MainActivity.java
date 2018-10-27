@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         //工作线程
         multiFileParser.setOnParseResultListener(new MultiFileParser.OnParseResultListener() {
             @Override
-            public void onParseResult(String json) {
+            public void onParseResult(BaseResponseBean<String> response) {
 
             }
         });
