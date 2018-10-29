@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.4"
+        versionName "1.5"
     }
 
     buildTypes {
@@ -23,7 +23,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'jexcelapi:jxl:2.6'//这个没有log4j包
 
-    implementation "androidx.lifecycle:lifecycle-livedata-core:2.0.0"
+    implementation "android.arch.lifecycle:livedata-core:1.1.1"
 }
 
 //---------maven-release-aar.gradle---------
